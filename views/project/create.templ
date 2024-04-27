@@ -1,0 +1,16 @@
+package project
+
+import (
+	"github.com/berkaycubuk/mqtt-studio/views/layout"
+)
+
+templ Create() {
+	@layout.Base() {
+		<h1>New project</h1>
+
+		<form method="POST" action="/projects/create">
+			<input type="text" name="name" />
+			<button>Save</button>
+		</form>
+	}
+}

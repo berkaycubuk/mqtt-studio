@@ -1,0 +1,17 @@
+package project
+
+import (
+	"github.com/berkaycubuk/mqtt-studio/views/layout"
+	"github.com/berkaycubuk/mqtt-studio/models"
+)
+
+templ Index(projects []models.Project) {
+	@layout.Base() {
+		<h1>HELLO!</h1>
+		<ul>
+		for _, item := range projects {
+			<li>{ item.Name }</li>
+		}
+		</ul>
+	}
+}
