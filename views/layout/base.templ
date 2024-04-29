@@ -2,9 +2,10 @@ package layout
 
 templ Base() {
 	<html>
-		<head></head>
-		<body>
-			base layout
+		<head>
+			<link rel="stylesheet" type="text/css" href="/main.css" />
+		</head>
+		<body class="bg-black text-white">
 			{ children... }
 		</body>
 	</html>

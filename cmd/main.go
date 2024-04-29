@@ -17,6 +17,20 @@ func runMigrations(db *sql.DB) {
 		fmt.Println("Error occured on Projects migration: ", err.Error())
 	}
 	projectsMigration.Exec()
+
+	// users
+	usersMigration, err := db.Prepare(models.UserMigrationQuery)
+	if err != nil {
+		fmt.Println("Error occured on Users migration: ", err.Error())
+	}
+	usersMigration.Exec()
+
+	// user_sessions
+	userSessionsMigration, err := db.Prepare(models.UserSessionMigrationQuery)
+	if err != nil {
+		fmt.Println("Error occured on User Sessions migration: ", err.Error())
+	}
+	userSessionsMigration.Exec()
 }
 
 func main() {
@@ -38,7 +52,17 @@ func main() {
 	projectHandler := handlers.ProjectHandler{
 		DB: db,
 	}
+	landingHandler := handlers.LandingHandler{}
+	authHandler := handlers.AuthHandler{
+		DB: db,
+	}
 
+	e.Static("/", "public")
+	e.GET("/", landingHandler.Index)
+	e.GET("/login", authHandler.LoginGET)
+	e.POST("/login", authHandler.LoginPOST)
+	e.GET("/register", authHandler.RegisterGET)
+	e.POST("/register", authHandler.RegisterPOST)
 	e.GET("/projects", projectHandler.Index)
 	e.GET("/projects/create", projectHandler.Create)
 	e.POST("/projects/create", projectHandler.CreatePost)

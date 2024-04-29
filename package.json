@@ -1,0 +1,15 @@
+{
+  "name": "mqtt-studio-v2",
+  "version": "1.0.0",
+  "description": "Build dashboards for your IoT projects that uses MQTT to communicate.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./resources/app.css -o ./public/main.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  }
+}
