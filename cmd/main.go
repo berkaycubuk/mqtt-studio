@@ -11,12 +11,15 @@ import (
 )
 
 func runMigrations(db *sql.DB) {
+	fmt.Println("System: Running migrations.")
+
 	// projects
 	projectsMigration, err := db.Prepare(models.ProjectMigrationQuery)
 	if err != nil {
 		fmt.Println("Error occured on Projects migration: ", err.Error())
 	}
 	projectsMigration.Exec()
+	fmt.Println("System: Projects migration ran.")
 
 	// users
 	usersMigration, err := db.Prepare(models.UserMigrationQuery)
@@ -24,6 +27,7 @@ func runMigrations(db *sql.DB) {
 		fmt.Println("Error occured on Users migration: ", err.Error())
 	}
 	usersMigration.Exec()
+	fmt.Println("System: Users migration ran.")
 
 	// user_sessions
 	userSessionsMigration, err := db.Prepare(models.UserSessionMigrationQuery)
@@ -31,6 +35,7 @@ func runMigrations(db *sql.DB) {
 		fmt.Println("Error occured on User Sessions migration: ", err.Error())
 	}
 	userSessionsMigration.Exec()
+	fmt.Println("System: User Sessions migration ran.")
 }
 
 func main() {

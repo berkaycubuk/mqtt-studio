@@ -1,0 +1,2 @@
+<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"/main.css\"></head><body class=\"bg-black text-white\">
+</body></html>
