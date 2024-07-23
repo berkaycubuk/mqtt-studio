@@ -7,6 +7,7 @@ import (
 	"github.com/berkaycubuk/mqtt-studio/service/auth"
 	"github.com/berkaycubuk/mqtt-studio/types"
 	"github.com/berkaycubuk/mqtt-studio/utils"
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 )
 
@@ -35,9 +36,17 @@ func (h *Handler) handleRegister(c echo.Context) error {
 		return err
 	}
 
+	// validate payload
+	if err := utils.Validate.Struct(payload); err != nil {
+		errors := err.(validator.ValidationErrors)
+		utils.WriteError(c, http.StatusBadRequest, fmt.Errorf("invalid payload %v", errors))
+		return fmt.Errorf("invalid payload %v", errors)
+	}
+
 	// check is user exists
-	_, err := h.store.GetUserByEmail(payload.Email)
+	a, err := h.store.GetUserByEmail(payload.Email)
 	if err == nil {
+		fmt.Println(a)
 		utils.WriteError(c, http.StatusBadRequest, fmt.Errorf("user with email %s already exists", payload.Email))
 		return fmt.Errorf("user with email %s already exists", payload.Email)
 	}
@@ -47,6 +56,7 @@ func (h *Handler) handleRegister(c echo.Context) error {
 		utils.WriteError(c, http.StatusInternalServerError, err)
 		return err
 	}
+	fmt.Println(hashedPassword)
 
 	// create new user
 	err = h.store.CreateUser(types.User{
